@@ -38,7 +38,7 @@ export const TreeView = forwardRef(function TreeView() {
       >
         <label>
           Select Id:
-          <input type='text' defaultValue={'10'} />
+          <input type='text' defaultValue={'15'} />
         </label>
         <button type='submit' name='selected'>
           Select
@@ -71,7 +71,7 @@ function TreeNode({ node, style, dragHandle }) {
     }
   };
   return (
-    <div style={style} ref={dragHandle} onClick={handleExpandClick}>
+    <div className={'tree-row'} style={style} ref={dragHandle} onClick={handleExpandClick}>
       {node.isLeaf ? null : <FontAwesomeIcon icon={node.isOpen ? faSquareMinus : faSquarePlus} width={14} height={16} />}{' '}
       {
         <span id={node.data.id} className={node.isSelected ? 'selected' : ''}>
