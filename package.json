@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "remix build",
     "dev": "remix dev --manual",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "remix-serve ./build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +26,8 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
