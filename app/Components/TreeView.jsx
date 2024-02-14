@@ -11,26 +11,10 @@ export const TreeView = forwardRef(function TreeView() {
     }
   };
   const treeRef = useRef(null);
-  const [initialData, platformChildrenCount] = nestedDataSet(11);
+  const [initialData, platformChildrenCount] = nestedDataSet(16);
   const [treeState, setTreeState] = useState(initialData);
   const [selectedId, setSelectedId] = useState(null);
-  const addNode = (e) => {
-    const temp = [...treeState];
-    temp[0].children.push({ id: Date.now().toString(36), name: 'Added_Node' });
-    setTreeState(temp);
-  };
-  const removeChild = (arr, id) => {
-    const newArray = arr
-      .map((item) => {
-        if (item.children?.length) {
-          return { ...item, children: removeChild(item.children, id) };
-        }
-        return item;
-      })
-      .filter((item) => item.id !== id);
 
-    return newArray;
-  };
   return (
     <div className='platform-child'>
       <h2>Tree View</h2>
@@ -54,7 +38,7 @@ export const TreeView = forwardRef(function TreeView() {
       >
         <label>
           Select Id:
-          <input type='text' value={'10'} />
+          <input type='text' defaultValue={'10'} />
         </label>
         <button type='submit' name='selected'>
           Select
