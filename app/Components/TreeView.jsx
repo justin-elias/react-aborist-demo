@@ -1,0 +1,99 @@
+import { Tree } from 'react-arborist';
+import { nestedDataSet } from '../../utils/initialData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus, faSquareMinus } from '@fortawesome/free-solid-svg-icons';
+import { useState, useRef, forwardRef } from 'react';
+
+export const TreeView = forwardRef(function TreeView() {
+  const handleClick = (e) => {
+    if (e.target.tagName === 'SPAN') {
+      setSelectedId(e.target.id);
+    }
+  };
+  const treeRef = useRef(null);
+  const [initialData, platformChildrenCount] = nestedDataSet(11);
+  const [treeState, setTreeState] = useState(initialData);
+  const [selectedId, setSelectedId] = useState(null);
+  const addNode = (e) => {
+    const temp = [...treeState];
+    temp[0].children.push({ id: Date.now().toString(36), name: 'Added_Node' });
+    setTreeState(temp);
+  };
+  const removeChild = (arr, id) => {
+    const newArray = arr
+      .map((item) => {
+        if (item.children?.length) {
+          return { ...item, children: removeChild(item.children, id) };
+        }
+        return item;
+      })
+      .filter((item) => item.id !== id);
+
+    return newArray;
+  };
+  return (
+    <div className='platform-child'>
+      <h2>Tree View</h2>
+      <button type='button' onClick={(e) => treeRef.current.openAll()}>
+        Expand All
+      </button>
+      <button
+        type='button'
+        onClick={(e) => {
+          treeRef.current.closeAll();
+          setSelectedId(null);
+        }}
+      >
+        Close All
+      </button>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSelectedId(e.target[0].value);
+        }}
+      >
+        <label>
+          Select Id:
+          <input type='text' value={'10'} />
+        </label>
+        <button type='submit' name='selected'>
+          Select
+        </button>
+      </form>
+      <Tree
+        data={treeState}
+        openByDefault={false}
+        indent={24}
+        rowHeight={36}
+        overscanCount={1}
+        paddingTop={30}
+        paddingBottom={10}
+        padding={25 /* sets both */}
+        onClick={handleClick}
+        ref={treeRef}
+        selection={selectedId}
+      >
+        {TreeNode}
+      </Tree>
+    </div>
+  );
+});
+
+function TreeNode({ node, style, dragHandle }) {
+  const handleExpandClick = (e) => {
+    if (e.target.closest('svg')) {
+      e.stopPropagation();
+      node.toggle();
+    }
+  };
+  return (
+    <div style={style} ref={dragHandle} onClick={handleExpandClick}>
+      {node.isLeaf ? null : <FontAwesomeIcon icon={node.isOpen ? faSquareMinus : faSquarePlus} width={14} height={16} />}{' '}
+      {
+        <span id={node.data.id} className={node.isSelected ? 'selected' : ''}>
+          {node.data.name}
+        </span>
+      }
+    </div>
+  );
+}
