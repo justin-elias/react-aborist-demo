@@ -1,0 +1,45 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "$": false,
+    "d3": "writable",
+    "wr7": "writable",
+    "domDataStore": "writable",
+    "shadowDOMDataStore": "writable"
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react/prop-types": 0,
+    "indent": 0,
+    "no-unused-vars": "warn",
+    "linebreak-style": ["error", "windows"],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "no-console": "off",
+    "max-len": ["warn", { "code": 150, "ignoreComments": true }],
+    "no-control-regex": "off",
+    "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+  }
+}
