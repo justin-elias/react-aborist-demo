@@ -1,3 +1,4 @@
+import React from 'react';
 import { Tree } from 'react-arborist';
 import { nestedDataSet } from '../../utils/initialData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,19 +12,19 @@ export const TreeView = forwardRef(function TreeView() {
     }
   };
   const treeRef = useRef(null);
-  const [initialData, platformChildrenCount] = nestedDataSet(16);
-  const [treeState, setTreeState] = useState(initialData);
+  const [initialData] = nestedDataSet(16);
+  const [treeState] = useState(initialData);
   const [selectedId, setSelectedId] = useState(null);
 
   return (
     <div className='platform-child'>
       <h2>Tree View</h2>
-      <button type='button' onClick={(e) => treeRef.current.openAll()}>
+      <button type='button' onClick={() => treeRef.current.openAll()}>
         Expand All
       </button>
       <button
         type='button'
-        onClick={(e) => {
+        onClick={() => {
           treeRef.current.closeAll();
           setSelectedId(null);
         }}

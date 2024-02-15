@@ -1,3 +1,4 @@
+import React from 'react';
 import { TreeView } from '../Components/TreeView';
 
 export default function PlatformView() {
